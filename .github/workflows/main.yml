@@ -1,0 +1,15 @@
+name: Download GPA
+on: [push]
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Intel GPA 2020 R4
+        run: |
+          wget -O gpa_2020_r4.msi "https://registrationcenter-download.intel.com/akdlm/irc_nas/17543/gpa_20.4.1608031112_release-external_x64_standalone.msi"
+          ls -lh gpa_2020_r4.msi
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpa_2020_r4
+          path: gpa_2020_r4.msi
