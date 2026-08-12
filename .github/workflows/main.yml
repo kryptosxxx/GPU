@@ -4,12 +4,16 @@ jobs:
   download:
     runs-on: ubuntu-latest
     steps:
-      - name: Download Intel GPA 2020 R4
+      - name: Download Intel GPA 2020 R4 via Wayback
         run: |
-          wget -O gpa_2020_r4.msi "https://registrationcenter-download.intel.com/akdlm/irc_nas/17543/gpa_20.4.1608031112_release-external_x64_standalone.msi"
+          wget --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0" \
+            --tries=5 --continue \
+            -O gpa_2020_r4.msi \
+            "https://web.archive.org/web/20250206153926if_/https://registrationcenter-download.intel.com/akdlm/irc_nas/17543/gpa_20.4.1608031112_release-external_x64_standalone.msi"
           ls -lh gpa_2020_r4.msi
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: gpa_2020_r4
           path: gpa_2020_r4.msi
+          retention-days: 1
